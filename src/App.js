@@ -1,6 +1,7 @@
 import { React } from "react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { FaSearch } from 'react-icons/fa';
+import MovieCard from './MovieCard';
 
 // e3baa0ff
 
@@ -19,8 +20,10 @@ const App = () => {
   const searchMovies = async (title) => {
     const response = await fetch(`${API_URL}&s=${title}`);
     const data = await response.json();
-    console.log(data.Search);
+    setMovies(data.Search);
   }
+
+  const [movies, setMovies] = useState([]);
 
   useEffect(() => {
     searchMovies('batman');
@@ -29,26 +32,28 @@ const App = () => {
   return (
     <div className="w-full">
       <div className="app w-[80%] mx-auto">
-        <h1 className="text-center font-bold text-gray-800 text-2xl my-8">Movie Library</h1>
+        <h1 className="text-center font-bold text-gray-800 text-5xl my-8">Movie Library</h1>
 
-        <div className="search mx-auto border-2 rounded-lg w-1/2 border-gray-400 text-base h-10 px-2 py-1 flex justify-between">
+        <div className="search mx-auto border-2 rounded-lg w-1/2 border-gray-400 text-base h-10 px-2 py-1 flex justify-between items-center">
           <input type="text" placeholder="Search movies" className="focus:outline-none w-full" value='Batman' onChange={()=> {}}/>
-          <FaSearch size={"1.5em"} onClick={()=>{}}/>
+          <FaSearch size={"1.25em"} onClick={()=>{}}/>
         </div>
 
 
-        <div className="container mt-16 mx-auto flex justify-between flex-warp">
-          <div className="card w-[300px] h-[444px]">
-            <div className="card-image h-full rounded-xl w-full overflow-hidden hover:opacity-50 transition-opacity">
-              <img src={movie1.Poster !== 'N/A' ? movie1.Poster : 'https://via.placeholder.com/400'} alt={movie1.Title}/>
+        {movies?.length > 0 
+          ? (
+            <div className="container mt-16 mx-auto flex justify-between flex-wrap">
+              {movies.map((movie) => (
+                <MovieCard movie={movie} />
+              ))}
             </div>
-            <div className="card-content relative top-[-444px]">
-              <div className="card-title">{movie1.Title}</div>
-              <div className="card-year">{movie1.Year}</div>
-              <div className="card-type">{movie1.Type}</div>
+          ) : (
+            <div className="container mt-16 mx-auto">
+              <h1 className="text-center font-bold text-gray-800 text-5xl my-8">No movies found</h1>
             </div>
-          </div>
-        </div>
+          )}
+
+        
       </div>
     </div>
   );
