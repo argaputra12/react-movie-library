@@ -5,17 +5,17 @@ import MovieCard from './MovieCard';
 
 // e3baa0ff
 
-const API_URL = 'http://www.omdbapi.com/?apikey=e3baa0ff';
-
-const movie1 = {
-  "Title": "Batman Begins",
-  "Year": "2005",
-  "imdbID": "tt0372784",
-  "Type": "movie",
-  "Poster": "https://m.media-amazon.com/images/M/MV5BOTY4YjI2N2MtYmFlMC00ZjcyLTg3YjEtMDQyM2ZjYzQ5YWFkXkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_SX300.jpg"
-}
 
 const App = () => {
+  const API_URL = 'http://www.omdbapi.com/?apikey=e3baa0ff';
+  
+  // const movie1 = {
+  //   "Title": "Batman Begins",
+  //   "Year": "2005",
+  //   "imdbID": "tt0372784",
+  //   "Type": "movie",
+  //   "Poster": "https://m.media-amazon.com/images/M/MV5BOTY4YjI2N2MtYmFlMC00ZjcyLTg3YjEtMDQyM2ZjYzQ5YWFkXkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_SX300.jpg"
+  // }
 
   const searchMovies = async (title) => {
     const response = await fetch(`${API_URL}&s=${title}`);
@@ -24,6 +24,7 @@ const App = () => {
   }
 
   const [movies, setMovies] = useState([]);
+  const [search, setSearch] = useState('');
 
   useEffect(() => {
     searchMovies('batman');
@@ -35,8 +36,8 @@ const App = () => {
         <h1 className="text-center font-bold text-gray-800 text-5xl my-8">Movie Library</h1>
 
         <div className="search mx-auto border-2 rounded-lg w-1/2 border-gray-400 text-base h-10 px-2 py-1 flex justify-between items-center">
-          <input type="text" placeholder="Search movies" className="focus:outline-none w-full" value='Batman' onChange={()=> {}}/>
-          <FaSearch size={"1.25em"} onClick={()=>{}}/>
+          <input type="text" placeholder="Search movies" className="focus:outline-none w-full" value={search} onChange={(e)=> setSearch(e.target.value)}/>
+          <FaSearch size={"1.25em"} onClick={()=>searchMovies(search)} className="hover:cursor-pointer"/>
         </div>
 
 
