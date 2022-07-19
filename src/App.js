@@ -26,10 +26,6 @@ const App = () => {
   const [movies, setMovies] = useState([]);
   const [search, setSearch] = useState('');
 
-  useEffect(() => {
-    searchMovies('batman');
-  }, [])
-
   return (
     <div className="w-full">
       <div className="app w-[80%] mx-auto">
